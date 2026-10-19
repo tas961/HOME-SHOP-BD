@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME SHOP - সততা, ইমান ও সেবার অনলাইন সুপারশপ</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #f59e0b;
+            --danger: #ef4444;
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 10px;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #374151;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', 'Poppins', sans-serif; transition: background 0.2s, color 0.2s; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.5; }
+
+        /* Announcement Marquee Bar */
+        .marquee-bar { background: #1e293b; color: #f59e0b; font-size: 13px; font-weight: 600; padding: 6px 0; overflow: hidden; white-space: nowrap; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .marquee-content { display: inline-block; animation: marquee 18s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Topbar & Header */
+        .top-bar { background: var(--primary-dark); color: white; padding: 5px 5%; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar a { color: white; text-decoration: none; }
+
+        header { background: var(--bg-card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; }
+        .logo { font-size: 20px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        
+        .header-controls { display: flex; align-items: center; gap: 10px; }
+        .btn-icon { background: none; border: none; color: var(--text-main); font-size: 18px; cursor: pointer; padding: 5px; position: relative; border-radius: 50%; }
+        .badge { position: absolute; top: -2px; right: -2px; background: var(--danger); color: white; font-size: 10px; width: 16px; height: 16px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+
+        /* Drawer Navigation */
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+        .side-drawer { position: fixed; top: 0; right: -280px; width: 260px; height: 100%; background: var(--bg-card); z-index: 999; transition: 0.3s; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 15px; }
+        .side-drawer.active { right: 0; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .drawer-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .drawer-menu a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 6px; cursor: pointer; }
+        .drawer-menu a:hover { background: rgba(16, 185, 129, 0.1); color: var(--primary); }
+
+        /* Main Container */
+        .container { max-width: 1000px; margin: 15px auto; padding: 0 12px; min-height: 80vh; }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.2s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Search Bar */
+        .search-box { position: relative; margin-bottom: 15px; }
+        .search-input { width: 100%; padding: 10px 15px 10px 40px; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-card); color: var(--text-main); outline: none; font-size: 14px; }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+
+        /* Compact Grid Layout (2/2) */
+        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media (min-width: 600px) { .grid-2x2 { grid-template-columns: repeat(4, 1fr); gap: 15px; } }
+
+        .card-sm { background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; cursor: pointer; position: relative; }
+        .card-sm:hover { border-color: var(--primary); }
+        .card-img-sm { width: 100%; height: 120px; object-fit: cover; }
+        .card-body-sm { padding: 8px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-title-sm { font-weight: 600; font-size: 13px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-unit-sm { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+        .card-price-sm { color: var(--primary); font-weight: 700; font-size: 14px; margin-top: auto; margin-bottom: 6px; }
+
+        /* Buttons */
+        .btn { background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; text-decoration: none; }
+        .btn:hover { background: var(--primary-dark); }
+        .btn-secondary { background: var(--secondary); }
+        .btn-danger { background: var(--danger); }
+        .btn-sm { padding: 4px 8px; font-size: 11px; border-radius: 4px; }
+
+        /* Forms */
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+        .form-control { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-size: 13px; outline: none; }
+
+        /* Modal Popups & Invoice Seals */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 12px; }
+        .modal.active { display: flex; }
+        .modal-card { background: var(--bg-card); color: var(--text-main); width: 100%; max-width: 480px; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); max-height: 90vh; overflow-y: auto; position: relative; }
+
+        /* Seal Stamps */
+        .seal-stamp { position: absolute; top: 15px; right: 20px; font-size: 24px; font-weight: 900; border: 3px double; padding: 4px 12px; border-radius: 8px; transform: rotate(-12deg); opacity: 0.85; text-transform: uppercase; pointer-events: none; }
+        .seal-paid { color: #10b981; border-color: #10b981; }
+        .seal-due { color: #ef4444; border-color: #ef4444; }
+
+        /* Tables */
+        .table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .table th, .table td { padding: 8px; text-align: left; border-bottom: 1px solid var(--border); font-size: 12px; }
+
+        /* Chat Box */
+        .chat-box { border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-top: 15px; background: rgba(0,0,0,0.02); }
+        .chat-messages { height: 130px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; font-size: 12px; padding-right: 5px; }
+        .chat-msg { padding: 6px 10px; border-radius: 6px; max-width: 80%; }
+        .chat-msg.customer { background: #d1fae5; color: #065f46; align-self: flex-end; }
+        .chat-msg.admin { background: #e5e7eb; color: #1f2937; align-self: flex-start; }
+
+        footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 15px; text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printable-invoice, #printable-invoice * { visibility: visible; }
+            #printable-invoice { position: absolute; left: 0; top: 0; width: 100%; color: black !important; background: white !important; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Announcement Headline Animation Bar -->
+    <div class="marquee-bar">
+        <div class="marquee-content" id="live-headline">📢 "সৎ ও আমানতদার ব্যবসায়ী কিয়ামতের দিন নবীগণের সাথে থাকবে" - আল হাদিস। সততার সাথেই HOME SHOP-এর পথচলা।</div>
+    </div>
+
+    <!-- Topbar -->
+    <div class="top-bar">
+        <span><i class="fa-solid fa-phone"></i> 01903325269</span>
+        <div>
+            <button class="btn-sm btn-secondary" onclick="toggleLanguage()"><span id="lang-btn-text">EN</span></button>
+            <button class="btn-sm" style="background:#374151;" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="showPage('home')">
+                <i class="fa-solid fa-basket-shopping"></i> HOME SHOP
+            </div>
+            <div class="header-controls">
+                <button class="btn-icon" onclick="showPage('track')" title="ট্র্যাক করুন"><i class="fa-solid fa-truck-fast"></i></button>
+                <button class="btn-icon" onclick="showPage('cart')">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="badge" id="cart-badge">0</span>
+                </button>
+                <button class="btn-icon" onclick="toggleDrawer()"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Drawer Navigation -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="side-drawer" id="side-drawer">
+        <div class="drawer-header">
+            <h3>মেন্যু</h3>
+            <button class="btn-icon" onclick="toggleDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul class="drawer-menu">
+            <li><a onclick="showPage('home')"><i class="fa-solid fa-house"></i> হোম</a></li>
+            <li><a onclick="showPage('shop')"><i class="fa-solid fa-store"></i> শপ</a></li>
+            <li><a onclick="showPage('track')"><i class="fa-solid fa-truck-fast"></i> অর্ডার ট্র্যাকিং ও হিস্ট্রি</a></li>
+            <li><a onclick="showPage('policy')"><i class="fa-solid fa-shield-halved"></i> আমাদের বিস্তৃত পলিসি</a></li>
+            <li><a onclick="showPage('reviews')"><i class="fa-solid fa-star"></i> কাস্টমার রিভিউ</a></li>
+            <li><a onclick="showPage('about')"><i class="fa-solid fa-heart"></i> আমাদের ঈমানী গল্প</a></li>
+            <li><a onclick="openAdminWithLock()"><i class="fa-solid fa-lock"></i> এডমিন এলাকা</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+
+        <!-- GLOBAL SEARCH BAR -->
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" id="global-search" placeholder="পণ্য খুঁজুন (যেমন: চাল, তেল, আলু...)" onkeyup="filterProducts()">
+        </div>
+
+        <!-- 1. HOME PAGE -->
+        <section id="page-home" class="page active">
+            <h3 style="margin-bottom: 10px;">জনপ্রিয় পণ্যসমূহ</h3>
+            <div class="grid-2x2" id="home-products"></div>
+        </section>
+
+        <!-- 2. SHOP PAGE -->
+        <section id="page-shop" class="page">
+            <h3 style="margin-bottom: 10px;">সকল পণ্য</h3>
+            <div class="grid-2x2" id="shop-products"></div>
+        </section>
+
+        <!-- 3. CART & CHECKOUT PAGE -->
+        <section id="page-cart" class="page">
+            <h3>আপনার কার্ট</h3>
+            <br>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr><th>পণ্য</th><th>একক মূল্য</th><th>পরিমাণ</th><th>মোট</th><th></th></tr>
+                        </thead>
+                        <tbody id="cart-table-body"></tbody>
+                    </table>
+                    <h4 style="text-align: right; margin-top: 10px;">মোট পণ্য মূল্য: <span id="cart-subtotal">৳ 0</span></h4>
+                </div>
+
+                <div style="background: var(--bg-card); padding: 15px; border-radius: var(--radius); border: 1px solid var(--border);">
+                    <h4>অর্ডার ফর্ম</h4>
+                    <br>
+                    <form onsubmit="handleCheckout(event)">
+                        <div class="form-group">
+                            <label>নাম *</label>
+                            <input type="text" id="cust-name" class="form-control" required placeholder="আপনার নাম">
+                        </div>
+                        <div class="form-group">
+                            <label>মোবাইল নম্বর *</label>
+                            <input type="tel" id="cust-phone" class="form-control" required placeholder="01XXXXXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label>পূর্ণাঙ্গ ঠিকানা *</label>
+                            <textarea id="cust-address" class="form-control" required placeholder="ডেলিভারির ঠিকানা লিখুন"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>পেমেন্ট পদ্ধতি</label>
+                            <select id="pay-method" class="form-control" onchange="togglePayDetails()">
+                                <option value="COD">ক্যাশ অন ডেলিভারি (Cash on Delivery)</option>
+                                <option value="bKash">বিকাশ (Personal: 01903325269)</option>
+                                <option value="Nagad">নগদ (Personal: 01903325269)</option>
+                            </select>
+                        </div>
+
+                        <!-- Online MFS Payment Box (Hidden on COD) -->
+                        <div id="mfs-details" style="display: none; background: rgba(245, 158, 11, 0.1); padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 12px;">
+                            <p style="margin-bottom: 6px;"><strong>01903325269</strong> নম্বরে টাকা পাঠালে তার শেষ ২ ডিজিট দিন:</p>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label>পেমেন্ট করা নম্বরের শেষ ২ ডিজিট</label>
+                                <input type="text" id="cust-pay-digits" class="form-control" maxlength="2" placeholder="যেমন: ৮৫">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn" style="width: 100%;">অর্ডার নিশ্চিত করুন</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TRACKING & HISTORY PAGE -->
+        <section id="page-track" class="page">
+            <h3>অর্ডার ট্র্যাকিং ও হিস্ট্রি</h3>
+            <p style="font-size: 12px; color: var(--text-muted);">আপনার মোবাইল নম্বর দিয়ে বর্তমান রানিং অর্ডার ও পূর্বের সকল অর্ডার হিস্ট্রি খুঁজুন:</p>
+            <br>
+            <div style="display: flex; gap: 8px; max-width: 400px;">
+                <input type="text" id="track-input" class="form-control" placeholder="মোবাইল নম্বর (যেমন: 017xxxxxxxx)">
+                <button class="btn" onclick="searchCustomerOrders()">খুঁজুন</button>
+            </div>
+            <div id="track-result" style="margin-top: 20px;"></div>
+        </section>
+
+        <!-- 5. EXTENDED POLICY PAGE -->
+        <section id="page-policy" class="page">
+            <h3>আমাদের শপ পলিসি ও নীতিমালার শর্তসমূহ (Complete Policies)</h3>
+            <br>
+            <div style="background: var(--bg-card); padding: 22px; border-radius: var(--radius); border: 1px solid var(--border); line-height: 1.8; font-size: 13.5px;">
+                
+                <h4 style="color:var(--primary); font-size:16px; border-bottom:1px solid var(--border); padding-bottom:4px;"><i class="fa-solid fa-truck-fast"></i> ১. দ্রুত ডেলিভারি ও সার্ভিস পলিসি</h4>
+                <p>আমরা কাঁচাবাজার ও দৈনন্দিন গ্রোসারি পণ্য সরাসরি গ্রাহকের হাতে দ্রুততম সময়ের মধ্যে (৩-৬ ঘণ্টার ভেতরে) পৌঁছে দেওয়ার অঙ্গীকার ব্যক্ত করছি। অর্ডারের পর আমাদের টিম ফোন বা মেসেজের মাধ্যমে সঠিক সময় নিশ্চিত করে থাকে।</p>
+                <br>
+
+                <h4 style="color:var(--primary); font-size:16px; border-bottom:1px solid var(--border); padding-bottom:4px;"><i class="fa-solid fa-scale-balanced"></i> ২. ইসলামিক ওজনের নিশ্চয়তা ও কোয়ালিটি পলিসি</h4>
+                <p>পবিত্র কোরআনে সুরা মুতাফফিফীনে ওজনে কম দেওয়াকে কঠোরভাবে নিষেধ করা হয়েছে। তাই <strong>HOME SHOP</strong>-এ প্রতিটি কেজি, ১০০ গ্রাম বা ১ পিস পণ্য ডিজিটাল পাল্লায় মেপে শতভাগ নিখুঁতভাবে দেওয়া হয়। আমরা কোনো ফরমালিন, রাসায়নিক যুক্ত অথবা পচা-বাসি পণ্য বিক্রি করি না।</p>
+                <br>
+
+                <h4 style="color:var(--primary); font-size:16px; border-bottom:1px solid var(--border); padding-bottom:4px;"><i class="fa-solid fa-handshake-angle"></i> ৩. ১০০% ফ্রি ও সহজ রিটার্ন এবং রিফান্ড পলিসি</h4>
+                <p>কাস্টমারের সন্তুষ্টিই আমাদের আখেরাতের পুঁজি। পণ্য ডেলিভারিম্যান নিয়ে যাওয়ার পর যদি আপনার মনে হয় যে প্রডাক্টের মান ভালো নয়, তবে আপনি ডেলিভারিম্যানের সামনেই সঙ্গে সঙ্গে পণ্য ফেরত দিতে পারবেন। এর জন্য আপনাকে কোনো জরিমানা বা বাড়তি চার্জ দিতে হবে না। আপনি আংশিক বা পুরো অর্ডার বাতিল করতে পারবেন।</p>
+                <br>
+
+                <h4 style="color:var(--primary); font-size:16px; border-bottom:1px solid var(--border); padding-bottom:4px;"><i class="fa-solid fa-lock"></i> ৪. পেমেন্ট ও আমানত রক্ষা পলিসি</h4>
+                <p>আপনি ক্যাশ অন ডেলিভারি (পণ্য দেখে টাকা প্রদান) ছাড়াও বিকাশ/নগদ এ টাকা পে করতে পারেন। আপনার প্রদত্ত প্রতিটি পয়সা আমাদের কাছে পবিত্র আমানত। কোনো কারণে পণ্য ডেলিভারি দেওয়া সম্ভব না হলে ২৪ ঘণ্টার মধ্যে সম্পূর্ণ টাকা ফেরত (Full Refund) দেওয়া হবে।</p>
+                <br>
+
+                <h4 style="color:var(--primary); font-size:16px; border-bottom:1px solid var(--border); padding-bottom:4px;"><i class="fa-solid fa-user-shield"></i> ৫. কাস্টমার প্রাইভেসি ও তথ্য সুরক্ষা নীতি</h4>
+                <p>আপনার ফোন নম্বর, নাম ও ঠিকানা সম্পূর্ণ গোপন রাখা হয়। আপনার ব্যক্তিগত তথ্য কেবল আপনার কাছে পার্সেল পৌঁছে দেওয়ার উদ্দেশ্যেই ব্যবহৃত হয় এবং অন্য কোনো তৃতীয় পক্ষের কাছে শেয়ার করা হয় না।</p>
+            </div>
+        </section>
+
+        <!-- 6. REVIEWS PAGE -->
+        <section id="page-reviews" class="page">
+            <h3>রিভিউ ও পরামর্শ</h3>
+            <br>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="background: var(--bg-card); padding: 15px; border-radius: var(--radius); border: 1px solid var(--border);">
+                    <h4>পরামর্শ দিন</h4>
+                    <br>
+                    <form onsubmit="handleReviewSubmit(event)">
+                        <div class="form-group"><label>নাম</label><input type="text" id="rev-name" class="form-control" required></div>
+                        <div class="form-group">
+                            <label>রেটিং</label>
+                            <select id="rev-rating" class="form-control">
+                                <option value="5">⭐⭐⭐⭐⭐ (৫/৫)</option>
+                                <option value="4">⭐⭐⭐⭐ (৪/৫)</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>পরামর্শ</label><textarea id="rev-msg" class="form-control" required></textarea></div>
+                        <button type="submit" class="btn">জমা দিন</button>
+                    </form>
+                </div>
+                <div>
+                    <h4>কাস্টমার রিভিউসমূহ</h4>
+                    <div id="reviews-feed" style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. ISLAMIC EMOTIONAL STORY PAGE -->
+        <section id="page-about" class="page">
+            <h3>আমাদের গল্প (Our Faith & Journey)</h3>
+            <br>
+            <div style="background: var(--bg-card); padding: 25px; border-radius: var(--radius); border: 1px solid var(--border); line-height: 1.8; font-size: 14px;">
+                <h3 style="color:var(--primary); border-bottom:2px solid var(--border); padding-bottom:5px;">বিসমিল্লাহির রহমানির রহিম 🤲</h3>
+                <br>
+                <p>আসসালামু আলাইকুম ওয়া রহমাতুল্লাহ। আমি <strong>তামিম</strong>, একজন সাধারণ তরুণ মুসলিম উদ্যোক্তা। <strong>HOME SHOP</strong> কেবল একটি অনলাইন দোকান বা পণ্য বেচাকেনার ওয়েবসাইট নয়; এটি আল্লাহর ওপর তাওয়াক্কুল ও ঈমানী আদর্শের ওপর ভিত্তি করে শুরু হওয়া একটি স্বপ্ন।</p>
+                <br>
+                <p>রাসূলুল্লাহ (সাল্লাল্লাহু আলাইহি ওয়া সাল্লাম) বলেছেন— <em>"সৎ, সত্যবাদী ও বিশ্বস্ত ব্যবসায়ী কিয়ামতের দিন নবীগণ, সিদ্দীকগণ ও শহীদগণের সাথে থাকবে।"</em> (তিরমিযী)</p>
+                <br>
+                <p>আজকের সমাজে যখন ব্যবসায়ের নামে ওজনে কম দেওয়া, ভেজাল বা রাসায়নিক মেশানো এবং ঠকানোর মহোৎসব চলছে, ঠিক সেই সময় একজন মুসলিম যুবক হিসেবে আমার মনে এক বড় তাগিদ তৈরি হয়। আমি সিদ্ধান্ত নিই—আমি এমন একটি প্রতিষ্ঠান গড়ার চেষ্টা করব, যেখানে একজন মা তার সন্তানের জন্য নিশ্চিন্তে বাজার করতে পারবেন, একজন অসুস্থ বাবা বিশ্বাস রাখতে পারবেন যে তার ঘরে খাঁটি পণ্যই পৌঁছাবে।</p>
+                <br>
+                <p>আমার এই ছোট্ট ব্যবসায়িক যাত্রায় কোনো জালিয়াতি নেই, নেই কোনো প্রতারণা। ইনশাআল্লাহ আপনার দেওয়া প্রতিটি টাকা আমার কাছে পবিত্র **আমানত**। আমি ওজনে ১ গ্রাম কম দেওয়াকে কবিরা গুনাহ ও আখেরাতের আজাব মনে করি। আপনার ভালোবাসা, এক ওয়াক্তের নামাজ শেষে মিষ্টি একটি দোয়া এবং আমাদের ওপর রাখা আপনার পূর্ণ বিশ্বাসই <strong>তামিম</strong>-এর ব্যবসার আসল লাভ।</p>
+                <br>
+                <p>আল্লাহ তাআলা আমাদের এই প্রচেষ্টায় বরকত দান করুন এবং আপনাদের সবাইকে হালাল খাবারের সুসংবাদ ও সুস্থতা দান করুন। আমিন।</p>
+                <br>
+                <p style="border-top: 1px dashed var(--border); padding-top: 10px;">
+                    <strong>উদ্যোক্তা:</strong> তামিম (Tamim)<br>
+                    <i class="fa-brands fa-whatsapp" style="color:green;"></i> <strong>হোয়াটসঅ্যাপ / কল:</strong> 01903325269<br>
+                    <i class="fa-solid fa-envelope"></i> <strong>ইমেইল:</strong> joytamim92@gmail.com
+                </p>
+            </div>
+        </section>
+
+        <!-- 8. ADMIN PANEL PAGE -->
+        <section id="page-admin" class="page">
+            <h3>এডমিন কন্ট্রোল ড্যাশবোর্ড</h3>
+            <br>
+            <div style="display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;">
+                <button class="btn btn-sm" onclick="showAdminTab('orders')">রানিং অর্ডার</button>
+                <button class="btn btn-sm btn-secondary" onclick="showAdminTab('products-manage')">পণ্য লিস্ট ও ডিলিট</button>
+                <button class="btn btn-sm" style="background:#8b5cf6;" onclick="showAdminTab('headline')">হেডলাইন নোটিশ</button>
+                <button class="btn btn-sm" style="background:var(--secondary);" onclick="showAdminTab('add-product')">পণ্য যুক্ত করুন</button>
+                <button class="btn btn-sm btn-secondary" onclick="showAdminTab('archive')">আর্কাইভ</button>
+            </div>
+
+            <!-- Running Orders Tab -->
+            <div id="admin-orders-tab">
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>আইডি</th>
+                                <th>কাস্টমার ও ঠিকানা</th>
+                                <th>পেমেন্ট ও হিসাব</th>
+                                <th>চার্জ ও স্ট্যাম্প</th>
+                                <th>অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Product Manage & Delete Tab -->
+            <div id="admin-products-manage-tab" style="display: none;">
+                <h4>পণ্য তালিকা ও ডিলিট অপশন</h4>
+                <br>
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr><th>ছবি</th><th>নাম</th><th>একক</th><th>মূল্য</th><th>অ্যাকশন</th></tr>
+                        </thead>
+                        <tbody id="admin-products-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Headline Marquee Setting Tab -->
+            <div id="admin-headline-tab" style="display: none; max-width: 450px;">
+                <h4>হোম পেজ নোটিশ পরিবর্তন</h4>
+                <br>
+                <div class="form-group">
+                    <label>নতুন শিরোনাম টেক্সট লিখুন</label>
+                    <textarea id="headline-input" class="form-control" rows="3"></textarea>
+                </div>
+                <button class="btn" onclick="saveHeadline()">শিরোনাম সেভ করুন</button>
+            </div>
+
+            <!-- Completed Orders Archive Tab -->
+            <div id="admin-archive-tab" style="display: none;">
+                <h4>ডেলিভারি সম্পন্ন হওয়া অর্ডারসমূহ</h4>
+                <div style="display: flex; gap: 8px; margin: 10px 0; max-width: 350px;">
+                    <input type="text" id="archive-search" class="form-control" placeholder="আইডি বা নম্বর দিয়ে খুঁজুন">
+                    <button class="btn btn-sm" onclick="renderArchiveOrders()">সার্চ</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr><th>আইডি</th><th>কাস্টমার</th><th>মোবাইল</th><th>সর্বমোট</th><th>তারিখ</th></tr>
+                        </thead>
+                        <tbody id="admin-archive-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Add Product Tab -->
+            <div id="admin-add-product-tab" style="display: none; max-width: 400px;">
+                <h4>গ্যালারি থেকে সরাসরি নতুন পণ্য যুক্ত করুন</h4>
+                <br>
+                <form onsubmit="handleAddProduct(event)">
+                    <div class="form-group"><label>পণ্যের নাম</label><input type="text" id="p-name" class="form-control" required placeholder="যেমন: আলূ / মিনিকেট চাল"></div>
+                    <div class="form-group"><label>১ কেজি / ১ পিসের মূল্য (৳)</label><input type="number" id="p-price" class="form-control" required placeholder="যেমন: ৬০"></div>
+                    <div class="form-group">
+                        <label>পরিমাপের ধরন (Unit Type)</label>
+                        <select id="p-unit-type" class="form-control">
+                            <option value="KG">কেজি (KG) - ১০০ গ্রাম থেকে নেওয়া যাবে</option>
+                            <option value="Pcs">পিস / প্যাকেট (Pcs) - সর্বনিম্ন ১ পিস</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>বিবরণ</label><textarea id="p-desc" class="form-control" placeholder="পণ্যের গুণাগুণ..."></textarea></div>
+                    <div class="form-group"><label>ছবি আপলোড করুন</label><input type="file" id="p-file" class="form-control" accept="image/*" required></div>
+                    <button type="submit" class="btn">পণ্য আপলোড করুন</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- PRODUCT DETAILS & WEIGHT SELECTOR MODAL -->
+    <div class="modal" id="product-modal">
+        <div class="modal-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 id="m-p-title">পণ্য বিবরণ</h3>
+                <button class="btn-icon" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <img id="m-p-img" src="" style="width:100%; height:170px; object-fit:cover; border-radius:6px; margin-bottom:10px;">
+            
+            <p id="m-p-base-price" style="font-size:13px; font-weight:600; color:var(--text-muted);"></p>
+            <p id="m-p-desc" style="font-size:12px; margin: 8px 0; color:var(--text-main);"></p>
+
+            <hr style="margin:10px 0;">
+
+            <!-- Dynamic Quantity/Weight Selection -->
+            <div class="form-group">
+                <label id="weight-select-label">পরিমাণ সিলেক্ট করুন:</label>
+                <select id="m-p-quantity-select" class="form-control" onchange="calculateModalPrice()"></select>
+            </div>
+
+            <h3 style="color:var(--primary); margin: 10px 0;">হিসাবকৃত মূল্য: ৳ <span id="m-p-calc-price">0</span></h3>
+
+            <button id="m-p-add-btn" class="btn" style="width:100%;"><i class="fa-solid fa-cart-plus"></i> কার্টে যোগ করুন</button>
+        </div>
+    </div>
+
+    <!-- INVOICE MODAL -->
+    <div class="modal" id="invoice-modal">
+        <div class="modal-card" id="printable-invoice" style="background:white; color:#1f2937;">
+            <div id="invoice-seal-stamp" class="seal-stamp seal-due">DUE</div>
+
+            <div style="text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 8px; margin-bottom: 10px;">
+                <h2>HOME SHOP</h2>
+                <small>Helpline: 01903325269 | Email: joytamim92@gmail.com</small>
+                <h3 style="margin-top: 5px; color: #10b981;">কাস্টমার ইনভয়েস</h3>
+            </div>
+            <div id="invoice-details"></div>
+            
+            <div class="chat-box no-print">
+                <h5 style="margin-bottom: 5px;">অর্ডার মেসেজ / কাস্টমার চ্যাট</h5>
+                <div class="chat-messages" id="modal-chat-msgs"></div>
+                <div style="display:flex; gap:5px;">
+                    <input type="text" id="chat-input" class="form-control" placeholder="মেসেজ লিখুন..." style="font-size:11px; padding:5px;">
+                    <button class="btn btn-sm" onclick="sendOrderMessage()">পাঠান</button>
+                </div>
+            </div>
+
+            <div class="no-print" style="margin-top: 15px; display: flex; gap: 8px;">
+                <button class="btn" style="flex: 1;" onclick="window.print()"><i class="fa-solid fa-download"></i> ইনভয়েস ডাউনলোড / প্রিন্ট</button>
+                <button class="btn btn-danger" onclick="closeInvoice()">বন্ধ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 HOME SHOP. সর্বস্বত্ব সংরক্ষিত | সততা ও ইমানের সাথে তরুণ উদ্যোক্তা তামিম-এর প্রয়াস।</p>
+    </footer>
+
+    <!-- JS Logic -->
+    <script>
+        let products = JSON.parse(localStorage.getItem('hs_products')) || [
+            { id: 101, name: "মিনিকেট চাল", price: 78, unitType: "KG", desc: "ঝরঝরে প্রিমিয়াম মিনিকেট চাল।", img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
+            { id: 102, name: "সয়াবিন তেল", price: 165, unitType: "Pcs", desc: "১ লিটার বোতল।", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
+            { id: 103, name: "দেশি আলু", price: 50, unitType: "KG", desc: "টাটকা দেশি আলু।", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400" }
+        ];
+
+        let cart = [];
+        let orders = JSON.parse(localStorage.getItem('hs_orders')) || [];
+        let reviews = JSON.parse(localStorage.getItem('hs_reviews')) || [];
+        let headlineText = localStorage.getItem('hs_headline') || "📢 \"সৎ ও আমানতদার ব্যবসায়ী কিয়ামতের দিন নবীগণের সাথে থাকবে\" - আল হাদিস। সততার সাথেই HOME SHOP-এর পথচলা।";
+        
+        let activeModalProduct = null;
+        let activeChatOrderId = null;
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            closeDrawer();
+            window.scrollTo(0,0);
+        }
+
+        function toggleDrawer() {
+            document.getElementById('side-drawer').classList.toggle('active');
+            document.getElementById('drawer-overlay').classList.toggle('active');
+        }
+        function closeDrawer() {
+            document.getElementById('side-drawer').classList.remove('active');
+            document.getElementById('drawer-overlay').classList.remove('active');
+        }
+
+        function openAdminWithLock() {
+            closeDrawer();
+            const pass = prompt("এডমিন প্যানেলে প্রবেশ করতে পাসকোড দিন:");
+            if (pass === "7290") {
+                showPage('admin');
+                renderAdminOrders();
+                renderAdminProducts();
+                document.getElementById('headline-input').value = headlineText;
+            } else if (pass !== null) {
+                alert("ভুল পাসকোড!");
+            }
+        }
+
+        function renderProducts(list = products) {
+            const homeGrid = document.getElementById('home-products');
+            const shopGrid = document.getElementById('shop-products');
+            
+            let html = '';
+            list.forEach(p => {
+                const unitLabel = p.unitType === 'KG' ? '১ কেজির দাম' : '১ পিসের দাম';
+                html += `
+                    <div class="card-sm" onclick="openProductModal(${p.id})">
+                        <img src="${p.img}" class="card-img-sm" alt="${p.name}">
+                        <div class="card-body-sm">
+                            <div class="card-title-sm">${p.name}</div>
+                            <div class="card-unit-sm">${unitLabel}</div>
+                            <div class="card-price-sm">৳ ${p.price}</div>
+                            <button class="btn btn-sm" onclick="event.stopPropagation(); openProductModal(${p.id})"><i class="fa-solid fa-cart-plus"></i> অর্ডার করুন</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const emptyMsg = '<p style="grid-column: 1/-1; color: var(--text-muted);">কোনো পণ্য পাওয়া যায়নি!</p>';
+            homeGrid.innerHTML = html || emptyMsg;
+            shopGrid.innerHTML = html || emptyMsg;
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('global-search').value.toLowerCase().trim();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+            renderProducts(filtered);
+        }
+
+        function openProductModal(pId) {
+            activeModalProduct = products.find(prod => prod.id === pId);
+            if(!activeModalProduct) return;
+
+            document.getElementById('m-p-title').innerText = activeModalProduct.name;
+            document.getElementById('m-p-img').src = activeModalProduct.img;
+            document.getElementById('m-p-desc').innerText = activeModalProduct.desc || "গুণগত মানসম্পন্ন তাজা পণ্য।";
+
+            const selectBox = document.getElementById('m-p-quantity-select');
+            selectBox.innerHTML = '';
+
+            if(activeModalProduct.unitType === 'KG') {
+                document.getElementById('m-p-base-price').innerText = `মূল্য: ৳ ${activeModalProduct.price} / কেজি`;
+                document.getElementById('weight-select-label').innerText = "কত গ্রাম বা কেজি নিতে চান সিলেক্ট করুন:";
+                
+                const kgOptions = [
+                    { label: "১০০ গ্রাম", multiplier: 0.1 },
+                    { label: "২৫০ গ্রাম", multiplier: 0.25 },
+                    { label: "৫০০ গ্রাম (আধা কেজি)", multiplier: 0.5 },
+                    { label: "৭৫০ গ্রাম", multiplier: 0.75 },
+                    { label: "১ কেজি", multiplier: 1 },
+                    { label: "১.৫ কেজি", multiplier: 1.5 },
+                    { label: "২ কেজি", multiplier: 2 },
+                    { label: "৩ কেজি", multiplier: 3 },
+                    { label: "৫ কেজি", multiplier: 5 }
+                ];
+
+                kgOptions.forEach(opt => {
+                    selectBox.innerHTML += `<option value="${opt.multiplier}">${opt.label}</option>`;
+                });
+                selectBox.value = 1;
+            } else {
+                document.getElementById('m-p-base-price').innerText = `মূল্য: ৳ ${activeModalProduct.price} / পিস`;
+                document.getElementById('weight-select-label').innerText = "কত পিস নিতে চান সিলেক্ট করুন:";
+
+                for(let i=1; i<=20; i++) {
+                    selectBox.innerHTML += `<option value="${i}">${i} পিস</option>`;
+                }
+            }
+
+            calculateModalPrice();
+            document.getElementById('m-p-add-btn').onclick = addSelectedToCart;
+            document.getElementById('product-modal').classList.add('active');
+        }
+
+        function calculateModalPrice() {
+            if(!activeModalProduct) return;
+            const multiplier = parseFloat(document.getElementById('m-p-quantity-select').value);
+            const total = Math.round(activeModalProduct.price * multiplier);
+            document.getElementById('m-p-calc-price').innerText = total;
+        }
+
+        function addSelectedToCart() {
+            if(!activeModalProduct) return;
+            const selectElem = document.getElementById('m-p-quantity-select');
+            const multiplier = parseFloat(selectElem.value);
+            const selectedText = selectElem.options[selectElem.selectedIndex].text;
+            const calculatedPrice = Math.round(activeModalProduct.price * multiplier);
+
+            cart.push({
+                id: activeModalProduct.id,
+                name: activeModalProduct.name,
+                unitLabel: selectedText,
+                itemTotal: calculatedPrice
+            });
+
+            updateCartUI();
+            closeProductModal();
+            alert(`"${activeModalProduct.name} (${selectedText})" কার্টে যুক্ত হয়েছে!`);
+        }
+
+        function closeProductModal() { document.getElementById('product-modal').classList.remove('active'); }
+
+        function updateCartUI() {
+            document.getElementById('cart-badge').innerText = cart.length;
+            const tbody = document.getElementById('cart-table-body');
+            let subtotal = 0;
+            let html = '';
+
+            cart.forEach((item, index) => {
+                subtotal += item.itemTotal;
+                html += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>৳ ${item.itemTotal}</td>
+                        <td>${item.unitLabel}</td>
+                        <td>৳ ${item.itemTotal}</td>
+                        <td><button class="btn-sm btn-danger" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html || '<tr><td colspan="5">কার্ট খালি!</td></tr>';
+            document.getElementById('cart-subtotal').innerText = `৳ ${subtotal}`;
+        }
+
+        function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
+
+        function togglePayDetails() {
+            const val = document.getElementById('pay-method').value;
+            document.getElementById('mfs-details').style.display = (val === 'COD') ? 'none' : 'block';
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            if (cart.length === 0) return alert("আপনার কার্ট খালি!");
+
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+            const payMethod = document.getElementById('pay-method').value;
+            const payDigits = document.getElementById('cust-pay-digits').value;
+
+            if(payMethod !== 'COD' && (!payDigits || payDigits.length !== 2)) {
+                return alert("সঠিকভাবে পেমেন্ট করা নম্বরের শেষ ২ ডিজিট ইনপুট দিন!");
+            }
+
+            const orderId = 'HS-' + Math.floor(10000 + Math.random() * 90000);
+            const subtotal = cart.reduce((a,b) => a + b.itemTotal, 0);
+
+            const newOrder = {
+                id: orderId,
+                customer: name,
+                phone: phone,
+                address: address,
+                payMethod: payMethod,
+                payDigits: payDigits,
+                subtotal: subtotal,
+                paidAmount: 0,
+                deliveryCharge: 0,
+                isPaid: false,
+                items: [...cart],
+                status: 'Pending',
+                chats: [],
+                date: new Date().toLocaleString('bn-BD')
+            };
+
+            orders.push(newOrder);
+            localStorage.setItem('hs_orders', JSON.stringify(orders));
+
+            cart = [];
+            updateCartUI();
+            e.target.reset();
+
+            openInvoice(newOrder);
+        }
+
+        function openInvoice(order) {
+            activeChatOrderId = order.id;
+            const total = order.subtotal + order.deliveryCharge;
+            const due = total - order.paidAmount;
+
+            const stamp = document.getElementById('invoice-seal-stamp');
+            if(order.isPaid || due <= 0) {
+                stamp.className = "seal-stamp seal-paid";
+                stamp.innerText = "PAID";
+            } else {
+                stamp.className = "seal-stamp seal-due";
+                stamp.innerText = "DUE";
+            }
+
+            let itemsHtml = order.items.map(i => `<div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:3px;"><span>${i.name} (${i.unitLabel})</span><span>৳ ${i.itemTotal}</span></div>`).join('');
+
+            document.getElementById('invoice-details').innerHTML = `
+                <div style="font-size:12px; line-height:1.4;">
+                    <p><strong>অর্ডার আইডি:</strong> ${order.id}</p>
+                    <p><strong>তারিখ:</strong> ${order.date}</p>
+                    <p><strong>নাম:</strong> ${order.customer} | <strong>মোবাইল:</strong> <a href="tel:${order.phone}">${order.phone}</a></p>
+                    <p><strong>ঠিকানা:</strong> ${order.address}</p>
+                    <p><strong>পেমেন্ট:</strong> ${order.payMethod === 'COD' ? 'Cash on Delivery (ক্যাশ অন ডেলিভারি)' : order.payMethod + ' (শেষ ২ ডিজিট: '+order.payDigits+')'}</p>
+                </div>
+                <hr style="margin:6px 0;">
+                <h5 style="margin-bottom:3px;">পণ্যসমূহ:</h5>
+                ${itemsHtml}
+                <hr style="margin:6px 0;">
+                <div style="font-size:12px;">
+                    <p style="display:flex; justify-content:space-between;"><span>পণ্য মোট:</span> <span>৳ ${order.subtotal}</span></p>
+                    <p style="display:flex; justify-content:space-between;"><span>ডেলিভারি চার্জ:</span> <span>৳ ${order.deliveryCharge}</span></p>
+                    <p style="display:flex; justify-content:space-between; font-weight:bold;"><span>সর্বমোট:</span> <span>৳ ${total}</span></p>
+                    <p style="display:flex; justify-content:space-between; color:green;"><span>পরিশোধিত (Paid):</span> <span>৳ ${order.paidAmount}</span></p>
+                    <p style="display:flex; justify-content:space-between; color:red; font-weight:bold;"><span>বাকি (Due):</span> <span>৳ ${due > 0 ? due : 0}</span></p>
+                </div>
+            `;
+            
+            renderChatMessages(order);
+            document.getElementById('invoice-modal').classList.add('active');
+        }
+
+        function closeInvoice() { document.getElementById('invoice-modal').classList.remove('active'); }
+
+        function renderChatMessages(order) {
+            const container = document.getElementById('modal-chat-msgs');
+            let html = '';
+            if(order.chats && order.chats.length > 0) {
+                order.chats.forEach(c => {
+                    html += `<div class="chat-msg ${c.sender}">${c.text}</div>`;
+                });
+            } else {
+                html = '<p style="color:var(--text-muted); text-align:center; font-size:11px;">মেসেজ পাঠান...</p>';
+            }
+            container.innerHTML = html;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendOrderMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if(!text || !activeChatOrderId) return;
+
+            const order = orders.find(o => o.id === activeChatOrderId);
+            if(order) {
+                if(!order.chats) order.chats = [];
+                order.chats.push({ sender: 'customer', text: text });
+                localStorage.setItem('hs_orders', JSON.stringify(orders));
+                input.value = '';
+                renderChatMessages(order);
+            }
+        }
+
+        function searchCustomerOrders() {
+            const query = document.getElementById('track-input').value.trim();
+            const resultDiv = document.getElementById('track-result');
+            const found = orders.filter(o => o.phone === query);
+
+            if (found.length === 0) {
+                resultDiv.innerHTML = '<p style="color:var(--danger);">এই নম্বরে কোনো অর্ডার পাওয়া যায়নি!</p>';
+                return;
+            }
+
+            let html = '<h4>আপনার সকল অর্ডার হিস্ট্রি</h4><br>';
+            found.forEach(o => {
+                const total = o.subtotal + o.deliveryCharge;
+                const due = total - o.paidAmount;
+                html += `
+                    <div style="background:var(--bg-card); border:1px solid var(--border); padding:12px; border-radius:var(--radius); margin-bottom:10px; font-size:13px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <strong>অর্ডার আইডি: ${o.id}</strong>
+                            <span style="background:var(--secondary); color:white; padding:2px 6px; border-radius:4px; font-size:11px;">${o.status}</span>
+                        </div>
+                        <p>তারিখ: ${o.date} | মোট: ৳${total} (বাকি: ৳${due > 0 ? due : 0})</p>
+                        <button class="btn btn-sm" onclick="openInvoice(orders.find(ord=>ord.id==='${o.id}'))" style="margin-top:6px;"><i class="fa-solid fa-file-invoice"></i> ইনভয়েস ও চ্যাট</button>
+                    </div>
+                `;
+            });
+
+            resultDiv.innerHTML = html;
+        }
+
+        function showAdminTab(tab) {
+            document.getElementById('admin-orders-tab').style.display = (tab === 'orders') ? 'block' : 'none';
+            document.getElementById('admin-products-manage-tab').style.display = (tab === 'products-manage') ? 'block' : 'none';
+            document.getElementById('admin-headline-tab').style.display = (tab === 'headline') ? 'block' : 'none';
+            document.getElementById('admin-archive-tab').style.display = (tab === 'archive') ? 'block' : 'none';
+            document.getElementById('admin-add-product-tab').style.display = (tab === 'add-product') ? 'block' : 'none';
+            if(tab === 'archive') renderArchiveOrders();
+            if(tab === 'products-manage') renderAdminProducts();
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('admin-orders-body');
+            let html = '';
+
+            const runningOrders = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled');
+
+            runningOrders.forEach(o => {
+                const total = o.subtotal + o.deliveryCharge;
+                const due = total - o.paidAmount;
+
+                html += `
+                    <tr>
+                        <td><strong>${o.id}</strong></td>
+                        <td>${o.customer}<br><small><a href="tel:${o.phone}">${o.phone}</a></small><br><small>${o.address}</small></td>
+                        <td>
+                            ${o.payMethod} ${o.payDigits ? '(digit: '+o.payDigits+')' : ''}<br>
+                            পেয়েছেন: ৳ <input type="number" value="${o.paidAmount}" style="width:55px;" id="paid-${o.id}">
+                            <button class="btn-sm" onclick="updatePaidAmount('${o.id}')">সেভ</button><br>
+                            <small style="color:red;">বাকি: ৳${due > 0 ? due : 0}</small>
+                        </td>
+                        <td>
+                            চার্জ: ৳ <input type="number" value="${o.deliveryCharge}" style="width:45px;" id="charge-${o.id}">
+                            <button class="btn-sm" onclick="setDeliveryCharge('${o.id}')">সেভ</button><br>
+                            সিল: <button class="btn-sm ${o.isPaid ? 'btn-secondary' : 'btn-danger'}" onclick="toggleSeal('${o.id}')">${o.isPaid ? 'Mark DUE' : 'Mark PAID'}</button>
+                        </td>
+                        <td>
+                            <button class="btn-sm btn-secondary" onclick="openInvoice(orders.find(ord=>ord.id==='${o.id}'))" style="margin-bottom:3px;"><i class="fa-solid fa-eye"></i> বিস্তারিত</button><br>
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="form-control" style="font-size:11px; padding:2px;">
+                                <option value="Pending" ${o.status==='Pending'?'selected':''}>Pending</option>
+                                <option value="Accepted" ${o.status==='Accepted'?'selected':''}>Accepted</option>
+                                <option value="OutForDelivery" ${o.status==='OutForDelivery'?'selected':''}>Out for Delivery</option>
+                                <option value="Delivered" ${o.status==='Delivered'?'selected':''}>Delivered (Complete)</option>
+                                <option value="Cancelled" ${o.status==='Cancelled'?'selected':''}>Cancelled</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html || '<tr><td colspan="5">কোনো রানিং অর্ডার নেই।</td></tr>';
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('admin-products-body');
+            let html = '';
+            products.forEach((p, index) => {
+                html += `
+                    <tr>
+                        <td><img src="${p.img}" style="width:35px; height:35px; object-fit:cover; border-radius:4px;"></td>
+                        <td><strong>${p.name}</strong></td>
+                        <td>${p.unitType === 'KG' ? 'কেজি' : 'পিস'}</td>
+                        <td>৳ ${p.price}</td>
+                        <td><button class="btn-sm btn-danger" onclick="deleteProduct(${index})"><i class="fa-solid fa-trash"></i> ডিলিট</button></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html || '<tr><td colspan="5">কোনো পণ্য নেই।</td></tr>';
+        }
+
+        function deleteProduct(index) {
+            if(confirm(`আপনি কি "${products[index].name}" পণ্যটি মুছে ফেলতে চান?`)) {
+                products.splice(index, 1);
+                localStorage.setItem('hs_products', JSON.stringify(products));
+                renderProducts();
+                renderAdminProducts();
+            }
+        }
+
+        function updatePaidAmount(oId) {
+            const val = parseFloat(document.getElementById(`paid-${oId}`).value) || 0;
+            const order = orders.find(o => o.id === oId);
+            if (order) {
+                order.paidAmount = val;
+                localStorage.setItem('hs_orders', JSON.stringify(orders));
+                alert("পরিশোধিত টাকা আপডেট করা হয়েছে!");
+                renderAdminOrders();
+            }
+        }
+
+        function setDeliveryCharge(oId) {
+            const val = parseFloat(document.getElementById(`charge-${oId}`).value) || 0;
+            const order = orders.find(o => o.id === oId);
+            if (order) {
+                order.deliveryCharge = val;
+                localStorage.setItem('hs_orders', JSON.stringify(orders));
+                alert("ডেলিভারি চার্জ সেভ করা হয়েছে!");
+                renderAdminOrders();
+            }
+        }
+
+        function toggleSeal(oId) {
+            const order = orders.find(o => o.id === oId);
+            if (order) {
+                order.isPaid = !order.isPaid;
+                localStorage.setItem('hs_orders', JSON.stringify(orders));
+                renderAdminOrders();
+            }
+        }
+
+        function updateOrderStatus(oId, newStatus) {
+            const order = orders.find(o => o.id === oId);
+            if (order) {
+                order.status = newStatus;
+                localStorage.setItem('hs_orders', JSON.stringify(orders));
+                renderAdminOrders();
+            }
+        }
+
+        function saveHeadline() {
+            const val = document.getElementById('headline-input').value;
+            if(val) {
+                headlineText = val;
+                localStorage.setItem('hs_headline', headlineText);
+                document.getElementById('live-headline').innerText = headlineText;
+                alert("হোম পেজের নোটিশ আপডেট হয়েছে!");
+            }
+        }
+
+        function renderArchiveOrders() {
+            const tbody = document.getElementById('admin-archive-body');
+            const searchVal = document.getElementById('archive-search').value.toLowerCase().trim();
+            const completed = orders.filter(o => o.status === 'Delivered');
+            const filtered = completed.filter(o => !searchVal || o.id.toLowerCase().includes(searchVal) || o.phone.includes(searchVal));
+
+            let html = '';
+            filtered.forEach(o => {
+                html += `
+                    <tr>
+                        <td><strong>${o.id}</strong></td>
+                        <td>${o.customer}</td>
+                        <td>${o.phone}</td>
+                        <td>৳ ${o.subtotal + o.deliveryCharge}</td>
+                        <td>${o.date}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html || '<tr><td colspan="5">কোনো সম্পন্ন অর্ডার পাওয়া যায়নি।</td></tr>';
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('p-name').value;
+            const price = parseFloat(document.getElementById('p-price').value);
+            const unitType = document.getElementById('p-unit-type').value;
+            const desc = document.getElementById('p-desc').value;
+            const fileInput = document.getElementById('p-file');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const img = new Image();
+                    img.src = evt.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const MAX_WIDTH = 300;
+                        const MAX_HEIGHT = 300;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                        } else {
+                            if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
+                        products.push({ id: Date.now(), name, price, unitType, desc, img: compressedDataUrl });
+                        try {
+                            localStorage.setItem('hs_products', JSON.stringify(products));
+                            renderProducts();
+                            alert("নতুন পণ্য সফলভাবে যুক্ত করা হয়েছে!");
+                            e.target.reset();
+                        } catch (err) {
+                            alert("স্টোরেজ পূর্ণ হয়ে গেছে!");
+                        }
+                    };
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('rev-name').value;
+            const rating = document.getElementById('rev-rating').value;
+            const msg = document.getElementById('rev-msg').value;
+
+            reviews.unshift({ name, rating, msg });
+            localStorage.setItem('hs_reviews', JSON.stringify(reviews));
+            renderReviews();
+            e.target.reset();
+        }
+
+        function renderReviews() {
+            const feed = document.getElementById('reviews-feed');
+            let html = '';
+            reviews.forEach(r => {
+                html += `<div style="background:var(--bg-card); padding:10px; border-radius:6px; border:1px solid var(--border); font-size:12px;"><strong>${r.name}</strong> (★${r.rating})<p>"${r.msg}"</p></div>`;
+            });
+            feed.innerHTML = html;
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+
+        function toggleLanguage() { alert("Language switched."); }
+
+        // Initial Load
+        document.getElementById('live-headline').innerText = headlineText;
+        renderProducts();
+        renderReviews();
+    </script>
+</body>
+</html>
